@@ -29,8 +29,6 @@ def main():
         clear_entry()
         global CURRENT_SIGN
         CURRENT_SIGN = sign
-        tkinter.Label(root, text=CURRENT_MEMORY).grid(row=6)
-        tkinter.Label(root, text=CURRENT_SIGN).grid(row=7)
     def clear_entry():
         current_length = len(entry_area.get())
         entry_area.delete(0, current_length)
@@ -61,25 +59,25 @@ def main():
     # create entry area
     entry_area = tkinter.Entry(root, width=50, borderwidth=5)
     # create number buttons
-    number0 = tkinter.Button(root, text="0", command=lambda: click_button(0), padx=40, pady=20)
-    number1 = tkinter.Button(root, text="1", command=lambda: click_button(1), padx=40, pady=20)
-    number2 = tkinter.Button(root, text="2", command=lambda: click_button(2), padx=40, pady=20)
-    number3 = tkinter.Button(root, text="3", command=lambda: click_button(3), padx=40, pady=20)
-    number4 = tkinter.Button(root, text="4", command=lambda: click_button(4), padx=40, pady=20)
-    number5 = tkinter.Button(root, text="5", command=lambda: click_button(5), padx=40, pady=20)
-    number6 = tkinter.Button(root, text="6", command=lambda: click_button(6), padx=40, pady=20)
-    number7 = tkinter.Button(root, text="7", command=lambda: click_button(7), padx=40, pady=20)
-    number8 = tkinter.Button(root, text="8", command=lambda: click_button(8), padx=40, pady=20)
-    number9 = tkinter.Button(root, text="9", command=lambda: click_button(9), padx=40, pady=20)
+    number0 = tkinter.Button(root, text="0", command=lambda: click_button(0), padx=40, pady=20, bg="#3ed8e1")
+    number1 = tkinter.Button(root, text="1", command=lambda: click_button(1), padx=40, pady=20, bg="#3ed8e1")
+    number2 = tkinter.Button(root, text="2", command=lambda: click_button(2), padx=40, pady=20, bg="#3ed8e1")
+    number3 = tkinter.Button(root, text="3", command=lambda: click_button(3), padx=40, pady=20, bg="#3ed8e1")
+    number4 = tkinter.Button(root, text="4", command=lambda: click_button(4), padx=40, pady=20, bg="#3ed8e1")
+    number5 = tkinter.Button(root, text="5", command=lambda: click_button(5), padx=40, pady=20, bg="#3ed8e1")
+    number6 = tkinter.Button(root, text="6", command=lambda: click_button(6), padx=40, pady=20, bg="#3ed8e1")
+    number7 = tkinter.Button(root, text="7", command=lambda: click_button(7), padx=40, pady=20, bg="#3ed8e1")
+    number8 = tkinter.Button(root, text="8", command=lambda: click_button(8), padx=40, pady=20, bg="#3ed8e1")
+    number9 = tkinter.Button(root, text="9", command=lambda: click_button(9), padx=40, pady=20, bg="#3ed8e1")
     # create special buttons
-    add_button = tkinter.Button(root, text="+", command=lambda: use_sign("+"), padx=40, pady=20, bg="yellow")
-    minus_button = tkinter.Button(root, text="-", command=lambda: use_sign("-"), padx=40, pady=20, bg="yellow")
-    mult_button = tkinter.Button(root, text="*", command=lambda: use_sign("*"), padx=40, pady=20, bg="yellow")
-    div_button = tkinter.Button(root, text="/", command=lambda: use_sign("/"), padx=40, pady=20, bg="yellow")
-    decimal_button = tkinter.Button(root, text=".", command=lambda: click_button("."), padx=40, pady=20, bg="yellow")
-    negative_button = tkinter.Button(root, text="(-)", command=make_negative, padx=33, pady=20, bg="yellow")
-    clear_button = tkinter.Button(root, text="clear", command=clear_entry, padx=25, pady=48, bg="red")
-    equals_button = tkinter.Button(root, text="Enter", command=evaluate, padx=26, pady=48, bg="green")
+    add_button = tkinter.Button(root, text="+", command=lambda: use_sign("+"), padx=40, pady=20, bg="#d8e13e")
+    minus_button = tkinter.Button(root, text="-", command=lambda: use_sign("-"), padx=40, pady=20, bg="#d8e13e")
+    mult_button = tkinter.Button(root, text="*", command=lambda: use_sign("*"), padx=40, pady=20, bg="#d8e13e")
+    div_button = tkinter.Button(root, text="/", command=lambda: use_sign("/"), padx=40, pady=20, bg="#d8e13e")
+    decimal_button = tkinter.Button(root, text=".", command=lambda: click_button("."), padx=40, pady=20, bg="#d8e13e")
+    negative_button = tkinter.Button(root, text="(-)", command=make_negative, padx=33, pady=20, bg="#d8e13e")
+    clear_button = tkinter.Button(root, text="Clear", command=clear_entry, padx=25, pady=48, bg="#e1473e")
+    equals_button = tkinter.Button(root, text="Enter", command=evaluate, padx=26, pady=48, bg="#3ee199")
 
     # position entry area
     entry_area.grid(column=0, row=0, columnspan=5, padx=5, pady=5)
@@ -105,9 +103,6 @@ def main():
     negative_button.grid(column=2, row=4)
     # run program loop
     root.mainloop()
-
-
-
 
 
 if __name__ == "__main__":
