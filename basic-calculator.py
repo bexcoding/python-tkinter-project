@@ -14,13 +14,50 @@ import tkinter
 def main():
     root = tkinter.Tk()
     root.title("Basic Calculator")
+    CURRENT_MEMORY = 0
+    CURRENT_SIGN = None
     # create functions for calculator
     def click_button(number):
         current_length = len(entry_area.get())
         entry_area.insert(current_length, number)
+    def use_sign(sign):
+        global CURRENT_MEMORY
+        try:
+            CURRENT_MEMORY = int(entry_area.get())
+        except:
+            CURRENT_MEMORY = float(entry_area.get())
+        clear_entry()
+        global CURRENT_SIGN
+        CURRENT_SIGN = sign
+        tkinter.Label(root, text=CURRENT_MEMORY).grid(row=6)
+        tkinter.Label(root, text=CURRENT_SIGN).grid(row=7)
     def clear_entry():
         current_length = len(entry_area.get())
         entry_area.delete(0, current_length)
+    def evaluate():
+        current_length = len(entry_area.get())
+        second_value = entry_area.get()
+        try:
+           second_value = int(second_value)
+        except:
+           second_value = float(second_value)
+        global CURRENT_SIGN
+        global CURRENT_MEMORY
+        if CURRENT_SIGN == "+":
+            answer = CURRENT_MEMORY + second_value
+        elif CURRENT_SIGN == "-":
+            answer = CURRENT_MEMORY - second_value
+        elif CURRENT_SIGN == "*":
+            answer = CURRENT_MEMORY * second_value
+        elif CURRENT_SIGN == "/":
+            answer = CURRENT_MEMORY / second_value
+        entry_area.delete(0, current_length)
+        entry_area.insert(0, answer)
+    def make_negative():
+        if entry_area.get()[0] == "-":
+            pass
+        else:
+            entry_area.insert(0, "-")
     # create entry area
     entry_area = tkinter.Entry(root, width=50, borderwidth=5)
     # create number buttons
@@ -35,14 +72,14 @@ def main():
     number8 = tkinter.Button(root, text="8", command=lambda: click_button(8), padx=40, pady=20)
     number9 = tkinter.Button(root, text="9", command=lambda: click_button(9), padx=40, pady=20)
     # create special buttons
-    add_button = tkinter.Button(root, text="+", padx=40, pady=20, bg="yellow")
-    minus_button = tkinter.Button(root, text="-", padx=40, pady=20, bg="yellow")
-    mult_button = tkinter.Button(root, text="*", padx=40, pady=20, bg="yellow")
-    div_button = tkinter.Button(root, text="/", padx=40, pady=20, bg="yellow")
-    decimal_button = tkinter.Button(root, text=".", padx=40, pady=20, bg="yellow")
-    negative_button = tkinter.Button(root, text="(-)", padx=33, pady=20, bg="yellow")
+    add_button = tkinter.Button(root, text="+", command=lambda: use_sign("+"), padx=40, pady=20, bg="yellow")
+    minus_button = tkinter.Button(root, text="-", command=lambda: use_sign("-"), padx=40, pady=20, bg="yellow")
+    mult_button = tkinter.Button(root, text="*", command=lambda: use_sign("*"), padx=40, pady=20, bg="yellow")
+    div_button = tkinter.Button(root, text="/", command=lambda: use_sign("/"), padx=40, pady=20, bg="yellow")
+    decimal_button = tkinter.Button(root, text=".", command=lambda: click_button("."), padx=40, pady=20, bg="yellow")
+    negative_button = tkinter.Button(root, text="(-)", command=make_negative, padx=33, pady=20, bg="yellow")
     clear_button = tkinter.Button(root, text="clear", command=clear_entry, padx=25, pady=48, bg="red")
-    equals_button = tkinter.Button(root, text="Enter", padx=26, pady=48, bg="green")
+    equals_button = tkinter.Button(root, text="Enter", command=evaluate, padx=26, pady=48, bg="green")
 
     # position entry area
     entry_area.grid(column=0, row=0, columnspan=5, padx=5, pady=5)
