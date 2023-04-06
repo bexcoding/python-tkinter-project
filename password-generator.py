@@ -13,7 +13,12 @@ import tkinter
 
 class Password():
     def __init__(self, pass_size, upper=False, lower=False, number=False, symbol=False):
-        pass
+        self.pass_size = pass_size
+        self.include_upper = upper
+        self.include_lower = lower
+        self.include_number = number
+        self.include_symbol = symbol
+
 
 
 class Application():
