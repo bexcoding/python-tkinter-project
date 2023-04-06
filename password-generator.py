@@ -35,6 +35,9 @@ class Application():
     def create_button_frame(self):
         self.button_frame = tkinter.LabelFrame(self.root)
         self.button = tkinter.Button(self.button_frame, text="Create Password")
+    def create_result_frame(self):
+        self.result_frame = tkinter.LabelFrame(self.root)
+        self.result = tkinter.Label(self.result_frame, text="V*34Hho!")
     def display_slider(self):
         self.slider_frame.grid(row=0)
         self.slider_label.grid(column=0, row=0)
@@ -49,6 +52,9 @@ class Application():
     def display_button(self):
         self.button_frame.grid(row=2)
         self.button.grid()
+    def display_result(self):
+        self.result_frame.grid(row=3)
+        self.result.grid()
     def run_program(self):
         self.root.mainloop()
         
@@ -63,5 +69,8 @@ if __name__ == "__main__":
 
     app.create_button_frame()
     app.display_button()
+
+    app.create_result_frame()
+    app.display_result()
 
     app.run_program()
