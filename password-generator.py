@@ -1,7 +1,7 @@
 """
 Title: Password Generator
 Description: GUI version of a password generator
-Last Updated: April 6, 2023
+Last Updated: April 7, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -14,6 +14,18 @@ import string
 
 
 class Password():
+    """
+    Description
+    ----------
+    Allows a user to generate a random password. The length and different
+    types of characters can be chosen when the class is instantiated.
+
+    Assumptions
+    ----------
+    There is no explicit type checking for this class so it is assumed that the
+    password will be generated using the Application class button.
+    """
+
     def __init__(self, pass_size, upper=False, lower=False, number=False, symbol=False):
         self.pass_size = pass_size
         self.include_upper = upper
@@ -65,6 +77,13 @@ class Password():
 
 
 class Application():
+    """
+    Description
+    ----------
+    Create a tkinter window with several widgets. The included button uses
+    the Password class to generate a random password.
+    """
+    
     def __init__(self):
         self.root = tkinter.Tk()
         self.root.geometry("400x400")
@@ -82,11 +101,10 @@ class Application():
         for x in [u, l, n, s]:
             if x == 1:
                 x = True
-        # need to pull information from slider and checkboxes
         self.random_password = Password(self.slider_result.get(), upper=u, lower=l, number=n, symbol=s).create_password()
         self.result = tkinter.Label(self.result_frame, text=self.random_password)
         self.result.grid()
-    def create_frames(self):
+    def create_widgets(self):
         self.slider_frame = tkinter.LabelFrame(self.root)
         self.slider_label = tkinter.Label(self.slider_frame, text="Password Length:")
         self.slider = tkinter.Scale(self.slider_frame, from_=4, to=15, orient="horizontal", variable=self.slider_result)
@@ -120,11 +138,9 @@ class Application():
 
         self.result_frame.grid(row=3)
         
-    def run_program(self):
-        self.root.mainloop()
         
 if __name__ == "__main__":
     app = Application()
-    app.create_frames()
+    app.create_widgets()
     app.display_widgets()
-    app.run_program()
+    app.root.mainloop()
