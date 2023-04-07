@@ -74,38 +74,38 @@ class Application():
         self.random_password = Password(10, upper=True, lower=True, number=True, symbol=True).create_password()
         self.result = tkinter.Label(self.result_frame, text=self.random_password)
         self.result.grid()
-    def create_slider_frame(self):
+    def create_frames(self):
         self.slider_frame = tkinter.LabelFrame(self.root)
         self.slider_label = tkinter.Label(self.slider_frame, text="Password Length:")
         self.slider = tkinter.Scale(self.slider_frame, from_=4, to=15, orient="horizontal")
-    def create_inclusion_frame(self):
+
         self.inclusion_frame = tkinter.LabelFrame(self.root)
         self.inclusion_label = tkinter.Label(self.inclusion_frame, text="Include these types:")
         self.upper_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Uppercase Letters (A,B,C...)")
         self.lower_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Lowercase Letters (a,b,c...)")
         self.number_check = tkinter.Checkbutton(self.inclusion_frame, text="Numbers (0,1,2...)")
         self.symbol_check = tkinter.Checkbutton(self.inclusion_frame, text="Symbols (!,?,+...)")
-    def create_button_frame(self):
+
         self.button_frame = tkinter.LabelFrame(self.root)
         self.button = tkinter.Button(self.button_frame, text="Create Password", command=self.generate_password)
-    def create_result_frame(self):
+
         self.result_frame = tkinter.LabelFrame(self.root)
         
-    def display_slider(self):
+    def display_widgets(self):
         self.slider_frame.grid(row=0)
         self.slider_label.grid(column=0, row=0)
         self.slider.grid(column=0, row=1)
-    def display_checkboxes(self):
+
         self.inclusion_frame.grid(row=1)
         self.inclusion_label.grid(row=0)
         self.upper_letter_check.grid(row=1, sticky="w")
         self.lower_letter_check.grid(row=2, sticky="w")
         self.number_check.grid(row=3, sticky="w")
         self.symbol_check.grid(row=4, sticky="w")
-    def display_button(self):
+
         self.button_frame.grid(row=2)
         self.button.grid()
-    def display_result(self):
+
         self.result_frame.grid(row=3)
         
     def run_program(self):
@@ -113,17 +113,6 @@ class Application():
         
 if __name__ == "__main__":
     app = Application()
-
-    app.create_slider_frame()
-    app.display_slider()
-
-    app.create_inclusion_frame()
-    app.display_checkboxes()
-
-    app.create_button_frame()
-    app.display_button()
-
-    app.create_result_frame()
-    app.display_result()
-
+    app.create_frames()
+    app.display_widgets()
     app.run_program()
