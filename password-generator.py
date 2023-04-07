@@ -69,22 +69,34 @@ class Application():
         self.root = tkinter.Tk()
         self.root.geometry("400x400")
         self.root.title("Random Password Generator")
+        self.slider_result = tkinter.IntVar()
+        self.check_result_up = tkinter.IntVar()
+        self.check_result_low= tkinter.IntVar()
+        self.check_result_num = tkinter.IntVar()
+        self.check_result_sym = tkinter.IntVar()
     def generate_password(self):
+        u = self.check_result_up.get()
+        l = self.check_result_low.get()
+        n = self.check_result_num.get()
+        s = self.check_result_sym.get()        
+        for x in [u, l, n, s]:
+            if x == 1:
+                x = True
         # need to pull information from slider and checkboxes
-        self.random_password = Password(10, upper=True, lower=True, number=True, symbol=True).create_password()
+        self.random_password = Password(self.slider_result.get(), upper=u, lower=l, number=n, symbol=s).create_password()
         self.result = tkinter.Label(self.result_frame, text=self.random_password)
         self.result.grid()
     def create_frames(self):
         self.slider_frame = tkinter.LabelFrame(self.root)
         self.slider_label = tkinter.Label(self.slider_frame, text="Password Length:")
-        self.slider = tkinter.Scale(self.slider_frame, from_=4, to=15, orient="horizontal")
+        self.slider = tkinter.Scale(self.slider_frame, from_=4, to=15, orient="horizontal", variable=self.slider_result)
 
         self.inclusion_frame = tkinter.LabelFrame(self.root)
         self.inclusion_label = tkinter.Label(self.inclusion_frame, text="Include these types:")
-        self.upper_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Uppercase Letters (A,B,C...)")
-        self.lower_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Lowercase Letters (a,b,c...)")
-        self.number_check = tkinter.Checkbutton(self.inclusion_frame, text="Numbers (0,1,2...)")
-        self.symbol_check = tkinter.Checkbutton(self.inclusion_frame, text="Symbols (!,?,+...)")
+        self.upper_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Uppercase Letters (A,B,C...)", variable=self.check_result_up)
+        self.lower_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Lowercase Letters (a,b,c...)", variable=self.check_result_low)
+        self.number_check = tkinter.Checkbutton(self.inclusion_frame, text="Numbers (0,1,2...)", variable=self.check_result_num)
+        self.symbol_check = tkinter.Checkbutton(self.inclusion_frame, text="Symbols (!,?,+...)", variable=self.check_result_sym)
 
         self.button_frame = tkinter.LabelFrame(self.root)
         self.button = tkinter.Button(self.button_frame, text="Create Password", command=self.generate_password)
