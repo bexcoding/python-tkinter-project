@@ -13,6 +13,12 @@ import random
 import string
 
 
+FONT = ("Helvetica", 18, "bold")
+COLOR1 = "#f7faff"
+COLOR2 = "#011029"
+COLOR3 = "#7ebecf"
+
+
 class Password():
     """
     Description
@@ -134,7 +140,7 @@ class Application():
     
     def __init__(self):
         self.root = tkinter.Tk()
-        self.root.geometry("400x400")
+        self.root.geometry("395x600")
         self.root.title("Random Password Generator")
         # sets and stores variables for slider and checkboxes
         self.slider_result = tkinter.IntVar()
@@ -167,9 +173,11 @@ class Application():
                                         lower=l, number=n, 
                                         symbol=s).create_password()
         self.result = tkinter.Label(self.result_frame, 
-                                    text=self.random_password)
-        self.result.grid()
-
+                                    text=self.random_password,
+                                    font=FONT, bg=COLOR1, fg=COLOR2, padx=5, 
+                                    pady=5)
+        self.result.pack(padx=5, pady=5)
+        
     def create_widgets(self):
         """
         Description
@@ -178,34 +186,48 @@ class Application():
         """
 
         # create slider
-        self.slider_frame = tkinter.LabelFrame(self.root)
+        self.slider_frame = tkinter.LabelFrame(self.root, bg=COLOR1, fg=COLOR2,
+                                               padx=10, pady=10)
         self.slider_label = tkinter.Label(self.slider_frame, 
-                                          text="Password Length:")
+                                          text="Password Length:",
+                                          font=FONT, bg=COLOR1, fg=COLOR2,
+                                          padx=5, pady=5)
         self.slider = tkinter.Scale(self.slider_frame, from_=4, to=15, 
                                     orient="horizontal", 
-                                    variable=self.slider_result)
+                                    variable=self.slider_result,
+                                    font=FONT, bg=COLOR1, fg=COLOR2)
         # create checkboxes
-        self.inclusion_frame = tkinter.LabelFrame(self.root)
+        self.inclusion_frame = tkinter.LabelFrame(self.root, bg=COLOR1, 
+                                                  fg=COLOR2, padx=10, pady=10)
         self.inclusion_label = tkinter.Label(self.inclusion_frame, 
-                                             text="Include these types:")
+                                             text="Include these types:",
+                                             font=FONT, bg=COLOR1, fg=COLOR2,
+                                             padx=5, pady=5)
         self.upper_letter_check = tkinter.Checkbutton(self.inclusion_frame, 
                                             text="Uppercase Letters (A,B,C...)", 
-                                            variable=self.check_result_up)
+                                            variable=self.check_result_up,
+                                            font=FONT, bg=COLOR1, fg=COLOR2)
         self.lower_letter_check = tkinter.Checkbutton(self.inclusion_frame, 
                                             text="Lowercase Letters (a,b,c...)", 
-                                            variable=self.check_result_low)
+                                            variable=self.check_result_low,
+                                            font=FONT, bg=COLOR1, fg=COLOR2)
         self.number_check = tkinter.Checkbutton(self.inclusion_frame, 
                                                 text="Numbers (0,1,2...)", 
-                                                variable=self.check_result_num)
+                                                variable=self.check_result_num,
+                                                font=FONT, bg=COLOR1, fg=COLOR2)
         self.symbol_check = tkinter.Checkbutton(self.inclusion_frame, 
                                                 text="Symbols (!,?,+...)", 
-                                                variable=self.check_result_sym)
+                                                variable=self.check_result_sym,
+                                                font=FONT, bg=COLOR1, fg=COLOR2)
         # create button
-        self.button_frame = tkinter.LabelFrame(self.root)
+        self.button_frame = tkinter.LabelFrame(self.root, bg=COLOR1, fg=COLOR2,
+                                               padx=10, pady=10)
         self.button = tkinter.Button(self.button_frame, text="Create Password", 
-                                     command=self.generate_password)
+                                     command=self.generate_password,
+                                     font=FONT, bg=COLOR3, fg=COLOR2, padx=5, 
+                                     pady=5)
         # create area for results
-        self.result_frame = tkinter.LabelFrame(self.root)
+        self.result_frame = tkinter.LabelFrame(self.root, bg=COLOR1, fg=COLOR2)
         
     def display_widgets(self):
         """
@@ -215,21 +237,21 @@ class Application():
         """
 
         # show slider
-        self.slider_frame.grid(row=0)
-        self.slider_label.grid(column=0, row=0)
-        self.slider.grid(column=0, row=1)
+        self.slider_frame.grid(row=0, sticky="we")
+        self.slider_label.pack()
+        self.slider.pack()
         # show checkboxes
-        self.inclusion_frame.grid(row=1)
+        self.inclusion_frame.grid(row=1, sticky="we")
         self.inclusion_label.grid(row=0)
         self.upper_letter_check.grid(row=1, sticky="w")
         self.lower_letter_check.grid(row=2, sticky="w")
         self.number_check.grid(row=3, sticky="w")
         self.symbol_check.grid(row=4, sticky="w")
         # show button
-        self.button_frame.grid(row=2)
-        self.button.grid()
+        self.button_frame.grid(row=2, sticky="we")
+        self.button.pack()
         # show result
-        self.result_frame.grid(row=3)
+        self.result_frame.grid(row=3, sticky="we")
         
         
 if __name__ == "__main__":
