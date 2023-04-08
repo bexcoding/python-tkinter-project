@@ -1,7 +1,7 @@
 """
 Title: Password Generator
 Description: GUI version of a password generator
-Last Updated: April 7, 2023
+Last Updated: April 8, 2023
 Developer: Alexander Beck
 Email: beckhv2@gmail.com
 Github: https://github.com/bexcoding
@@ -23,21 +23,37 @@ class Password():
     Assumptions
     ----------
     There is no explicit type checking for this class so it is assumed that the
-    password will be generated using the Application class button.
+    password will be generated using the button in the Application class.
     """
 
-    def __init__(self, pass_size, upper=False, lower=False, number=False, symbol=False):
+    def __init__(self, pass_size, upper=False, lower=False, number=False, 
+                symbol=False):
         self.pass_size = pass_size
         self.include_upper = upper
         self.include_lower = lower
         self.include_number = number
         self.include_symbol = symbol
+        # these contain all of the options for all four character types
         self.uppers = list(string.ascii_uppercase)
         self.lowers = list(string.ascii_lowercase)
         self.nums = list(string.digits)
         self.symbols = list(string.punctuation)
+
     def check_inclusion(self):
-        if not (self.include_upper or self.include_lower or self.include_number or self.include_symbol):
+        """
+        Description
+        ----------
+        Checks which character types the user wants in their password.
+
+        Return
+        ----------
+        Returns list of character types to include when making the password.
+        These types are represented by the strings "u", "l", "n", and "s".
+        """
+
+        # if no character types were chosen, selects lowercase and number types
+        if not (self.include_upper or self.include_lower or self.include_number 
+                or self.include_symbol):
             self.include_lower = True
             self.include_number = True
         character_types = []
@@ -50,10 +66,42 @@ class Password():
         if self.include_symbol:
             character_types.append("s")
         return character_types
+    
     def choose_character(self, character_list):
+        """
+        Description
+        ----------
+        Shuffles the given list and chooses a random character.
+
+        Return
+        ----------
+        Returns a single, random string character from the list.
+
+        Parameters
+        ----------
+        character_list: list
+            List from which a character should be chosen.
+        """
+
         random.shuffle(character_list)
         return random.choice(character_list)
+    
     def create_password(self):
+        """
+        Description
+        ----------
+        Creates a random password using the inclusion criteria and the length
+        that the user wants.
+
+        Return
+        ----------
+        Returns a string of random characters.
+
+        Assumptions
+        ----------
+        self.pass_size > 0
+        """
+
         character_types = self.check_inclusion()
         new_password = []
         current_list_index = 0
@@ -88,54 +136,99 @@ class Application():
         self.root = tkinter.Tk()
         self.root.geometry("400x400")
         self.root.title("Random Password Generator")
+        # sets and stores variables for slider and checkboxes
         self.slider_result = tkinter.IntVar()
         self.check_result_up = tkinter.IntVar()
         self.check_result_low= tkinter.IntVar()
         self.check_result_num = tkinter.IntVar()
         self.check_result_sym = tkinter.IntVar()
+
     def generate_password(self):
+        """
+        Description
+        ----------
+        Gets user choices from checkboxes and slider. Uses results to create a
+        random password with the Password class. Puts the results in the results
+        frame at bottom of the app.
+        """
+
+        # get current values of checkboxes
         u = self.check_result_up.get()
         l = self.check_result_low.get()
         n = self.check_result_num.get()
-        s = self.check_result_sym.get()        
+        s = self.check_result_sym.get()
+        # switches values from 1 or 0 to boolean
         for x in [u, l, n, s]:
             if x == 1:
                 x = True
-        self.random_password = Password(self.slider_result.get(), upper=u, lower=l, number=n, symbol=s).create_password()
-        self.result = tkinter.Label(self.result_frame, text=self.random_password)
+            else:
+                x = False
+        self.random_password = Password(self.slider_result.get(), upper=u, 
+                                        lower=l, number=n, 
+                                        symbol=s).create_password()
+        self.result = tkinter.Label(self.result_frame, 
+                                    text=self.random_password)
         self.result.grid()
+
     def create_widgets(self):
+        """
+        Description
+        ----------
+        Creates all of the widgets for the program.
+        """
+
+        # create slider
         self.slider_frame = tkinter.LabelFrame(self.root)
-        self.slider_label = tkinter.Label(self.slider_frame, text="Password Length:")
-        self.slider = tkinter.Scale(self.slider_frame, from_=4, to=15, orient="horizontal", variable=self.slider_result)
-
+        self.slider_label = tkinter.Label(self.slider_frame, 
+                                          text="Password Length:")
+        self.slider = tkinter.Scale(self.slider_frame, from_=4, to=15, 
+                                    orient="horizontal", 
+                                    variable=self.slider_result)
+        # create checkboxes
         self.inclusion_frame = tkinter.LabelFrame(self.root)
-        self.inclusion_label = tkinter.Label(self.inclusion_frame, text="Include these types:")
-        self.upper_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Uppercase Letters (A,B,C...)", variable=self.check_result_up)
-        self.lower_letter_check = tkinter.Checkbutton(self.inclusion_frame, text="Lowercase Letters (a,b,c...)", variable=self.check_result_low)
-        self.number_check = tkinter.Checkbutton(self.inclusion_frame, text="Numbers (0,1,2...)", variable=self.check_result_num)
-        self.symbol_check = tkinter.Checkbutton(self.inclusion_frame, text="Symbols (!,?,+...)", variable=self.check_result_sym)
-
+        self.inclusion_label = tkinter.Label(self.inclusion_frame, 
+                                             text="Include these types:")
+        self.upper_letter_check = tkinter.Checkbutton(self.inclusion_frame, 
+                                            text="Uppercase Letters (A,B,C...)", 
+                                            variable=self.check_result_up)
+        self.lower_letter_check = tkinter.Checkbutton(self.inclusion_frame, 
+                                            text="Lowercase Letters (a,b,c...)", 
+                                            variable=self.check_result_low)
+        self.number_check = tkinter.Checkbutton(self.inclusion_frame, 
+                                                text="Numbers (0,1,2...)", 
+                                                variable=self.check_result_num)
+        self.symbol_check = tkinter.Checkbutton(self.inclusion_frame, 
+                                                text="Symbols (!,?,+...)", 
+                                                variable=self.check_result_sym)
+        # create button
         self.button_frame = tkinter.LabelFrame(self.root)
-        self.button = tkinter.Button(self.button_frame, text="Create Password", command=self.generate_password)
-
+        self.button = tkinter.Button(self.button_frame, text="Create Password", 
+                                     command=self.generate_password)
+        # create area for results
         self.result_frame = tkinter.LabelFrame(self.root)
         
     def display_widgets(self):
+        """
+        Description
+        ----------
+        Shows all of the created widgets.
+        """
+
+        # show slider
         self.slider_frame.grid(row=0)
         self.slider_label.grid(column=0, row=0)
         self.slider.grid(column=0, row=1)
-
+        # show checkboxes
         self.inclusion_frame.grid(row=1)
         self.inclusion_label.grid(row=0)
         self.upper_letter_check.grid(row=1, sticky="w")
         self.lower_letter_check.grid(row=2, sticky="w")
         self.number_check.grid(row=3, sticky="w")
         self.symbol_check.grid(row=4, sticky="w")
-
+        # show button
         self.button_frame.grid(row=2)
         self.button.grid()
-
+        # show result
         self.result_frame.grid(row=3)
         
         
